@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from frontend.views import index
+from frontend.views import index, getRealEstate, getColumnDescription
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
+    path('api/realestate/<int:times>', getRealEstate),
+    path('api/columndescription', getColumnDescription),
 ]

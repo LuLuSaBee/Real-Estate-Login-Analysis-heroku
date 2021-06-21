@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.core import serializers
+from django.http import HttpResponse
 from frontend import models
 import datetime
 import tejapi
@@ -9,6 +11,20 @@ import sys
 def index(request):
     # addData()
     return render(request, 'frontend/index.html')
+
+
+def getRealEstate(request, times):
+    indexStart = 25
+    data = models.RealEstate.objects.all(
+    )[indexStart * times: indexStart * (1 + times)]
+    qs_json = serializers.serialize('json', data)
+    return HttpResponse(qs_json, content_type='application/json')
+
+
+def getColumnDescription(request):
+    data = models.ColumnDescription.objects.all()
+    qs_json = serializers.serialize('json', data)
+    return HttpResponse(qs_json, content_type='application/json')
 
 
 def addData():
