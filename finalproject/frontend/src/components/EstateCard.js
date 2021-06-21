@@ -1,10 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { updateCalculatorParam } from "../redux/actions";
 
 const googleMapUrl = (x, y) =>
   `https://www.google.com.tw/maps/search/${x},${y}/@${x},${y},17z`;
 
-export default function EstateCard(props) {
+function EstateCard(props) {
   const classes = useStyles();
   const {
     location,
@@ -17,6 +20,7 @@ export default function EstateCard(props) {
     tot_prc,
     unit_prc,
   } = props;
+  const history = useHistory();
 
   return (
     <div className={classes.card}>
@@ -28,7 +32,13 @@ export default function EstateCard(props) {
         <div>使用分區：{zoning}</div>
         <div>交易內容：{tsign}</div>
         <div>建物型態：{bstate}</div>
-        <div>
+        <div
+          onClick={() => {
+            props.dispatch(updateCalculatorParam({ loan: tot_prc }));
+            history.push("/calculator");
+          }}
+          className={classes.calculator}
+        >
           成交價格：{tot_prc}萬元({unit_prc}萬/坪)
         </div>
         <div
@@ -80,6 +90,9 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     position: "relative",
   },
+  calculator: {
+    cursor: "pointer",
+  },
   location: {
     fontSize: "20pt",
     fontWeight: "bold",
@@ -93,3 +106,5 @@ const useStyles = makeStyles(() => ({
     right: 0,
   },
 }));
+
+export default connect()(EstateCard);

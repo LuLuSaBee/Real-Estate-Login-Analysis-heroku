@@ -18,8 +18,17 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { navData } from "./data.source";
 import { connect } from "react-redux";
-import { initColumnData, initRealEstateData } from "./redux/actions";
-import { getColumnDescription, getRealEstate } from "./helper/getDjangoData";
+import {
+  initColumnData,
+  initRealEstateData,
+  initDashBoardData,
+} from "./redux/actions";
+import {
+  getColumnDescription,
+  getRealEstate,
+  getTotalValue,
+} from "./helper/getDjangoData";
+import ScrollToTop from "./helper/ScrollToTop";
 
 const drawerWidth = 200;
 
@@ -91,6 +100,7 @@ function App(props) {
 
   getColumnDescription((result) => props.dispatch(initColumnData(result)));
   getRealEstate(0, (result) => props.dispatch(initRealEstateData(result)));
+  getTotalValue((result) => props.dispatch(initDashBoardData(result)));
 
   return (
     <div className={classes.root}>
@@ -142,11 +152,13 @@ function App(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <Switch>
-          {navData.map(({ path, component }) => (
-            <Route exact path={path} key={path} component={component} />
-          ))}
-        </Switch>
+        <ScrollToTop>
+          <Switch>
+            {navData.map(({ path, component }) => (
+              <Route exact path={path} key={path} component={component} />
+            ))}
+          </Switch>
+        </ScrollToTop>
       </main>
     </div>
   );

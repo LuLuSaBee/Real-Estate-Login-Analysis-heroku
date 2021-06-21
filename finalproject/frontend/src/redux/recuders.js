@@ -27,7 +27,7 @@ function columnData(state = [], action) {
   }
 }
 
-function dashboardData(state = {}, action) {
+function dashboardData(state = [], action) {
   switch (action.type) {
     case INIT_DASHBOARDDATA:
       return action.dashBoardData;

@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from frontend.views import index, getRealEstate, getColumnDescription
+from frontend.views import index, getRealEstate, getColumnDescription, getTotalValue
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('/admin/', admin.site.urls),
     path('api/realestate/<int:times>', getRealEstate),
     path('api/columndescription', getColumnDescription),
+    path('api/totalvalue', getTotalValue),
     path('<str:path>', index),
     path('', index),
 ]

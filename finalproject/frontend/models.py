@@ -85,3 +85,14 @@ class ColumnDescription(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TotalValue(models.Model):
+    date = models.CharField(max_length=50)
+    price = models.DecimalField(
+        max_digits=100, decimal_places=1, default=0)
+    total = models.DecimalField(
+        max_digits=100, decimal_places=0, default=0)
+
+    def __str__(self):
+        return self.date
