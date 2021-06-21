@@ -8,7 +8,7 @@ import requests
 import sys
 
 
-def index(request):
+def index(request, path='/'):
     # addData()
     return render(request, 'frontend/index.html')
 
@@ -38,15 +38,14 @@ def addData():
     print('start sql')
     for index, row in data.iterrows():
         # print('sql ' + str(index))
-
         # sys.stdout.write('\r')
         # step = index / len(data.index) * 100
         # sys.stdout.write("[%-20s] %.2f%%" % ('='*int(step / 5), step))
         # sys.stdout.flush()
-        # tmp = {}
-        # for column in data.columns:
-        #     if row[column] != None:
-        #         tmp[column] = row[column]
+        tmp = {}
+        for column in data.columns:
+            if row[column] != None:
+                tmp[column] = row[column]
 
         tmp['caseID'] = tmp.pop('key3')
         tmp['cotID'] = tmp.pop('coid')

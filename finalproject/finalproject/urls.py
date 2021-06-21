@@ -19,7 +19,8 @@ from frontend.views import index, getRealEstate, getColumnDescription
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
     path('api/realestate/<int:times>', getRealEstate),
     path('api/columndescription', getColumnDescription),
+    path('<str:path>', index),
+    path('', index),
 ]

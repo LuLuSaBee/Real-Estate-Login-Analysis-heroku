@@ -17,6 +17,9 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { Switch, Route, useHistory } from "react-router-dom";
 import { navData } from "./data.source";
+import { connect } from "react-redux";
+import { initColumnData, initRealEstateData } from "./redux/actions";
+import { getColumnDescription, getRealEstate } from "./helper/getDjangoData";
 
 const drawerWidth = 200;
 
@@ -48,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
     marginTop: 64,
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
@@ -85,6 +89,9 @@ function App(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  getColumnDescription((result) => props.dispatch(initColumnData(result)));
+  getRealEstate(0, (result) => props.dispatch(initRealEstateData(result)));
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -105,7 +112,6 @@ function App(props) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label='mailbox folders'>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden mdUp implementation='css'>
           <Drawer
             container={container}
@@ -117,7 +123,7 @@ function App(props) {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
           >
             {drawer}
@@ -146,4 +152,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default connect()(App);
