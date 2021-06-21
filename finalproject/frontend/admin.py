@@ -1,3 +1,5 @@
 from django.contrib import admin
+from frontend import models
 
-# Register your models here.
+admin.site.register(models.RealEstate)
+admin.site.register(models.ColumnDescription)
