@@ -23,7 +23,7 @@ class HomePage extends React.Component {
       },
       {
         type: "bar",
-        label: "數量",
+        label: "成交數量",
         backgroundColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
         data: data.map((d) => d.total),
         borderColor: "white",
